@@ -3,7 +3,7 @@
 ## Qué construí
 
 Armé un servidor MCP con FastMCP que se conecta a la API de estadísticas del BCRP. Tiene las tres herramientas base
-(`buscar_series`, `serie` y `resumen`) y una que agregué yo, `ultimo_dato`. La pensé para preguntas del tipo «¿cuánto
+(`buscar_series`, `serie` y `resumen`) y una que agregué yo, `valor_actual`. La pensé para preguntas del tipo «¿cuánto
 está hoy el tipo de cambio?», donde el modelo no sabe qué mes o qué día ya está publicado. Devuelve el último dato, el
 del año anterior, la variación entre ambos y el link de la fuente.
 

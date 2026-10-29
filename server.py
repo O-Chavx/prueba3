@@ -189,12 +189,12 @@ def resumen(codigo: str, desde: str, hasta: str) -> dict:
 
 
 @mcp.tool(annotations=SOLO_LECTURA)
-def ultimo_dato(codigo: str) -> dict:
+def valor_actual(codigo: str) -> dict:
     """El dato más reciente publicado de una serie del BCRP, con su periodo y el dato del año anterior.
 
     Úsala cuando pregunten por el valor «actual», «más reciente» o «último» de algo (la inflación de hoy, el tipo
     de cambio de ayer, las reservas de este mes) y no se sepa qué periodo ya está publicado. Ejemplo:
-    ultimo_dato("PD04638PD"). Devuelve ultimo {periodo, valor}, hace_un_anio {periodo, valor} cuando existe,
+    valor_actual("PD04638PD"). Devuelve ultimo {periodo, valor}, hace_un_anio {periodo, valor} cuando existe,
     la variación % entre ambos, los días desde la última actualización del catálogo y la URL de la fuente.
     """
     ficha = _ficha(codigo.strip().upper())
@@ -227,7 +227,7 @@ def informe(tema: str) -> str:
     """Informe breve con cifras oficiales del BCRP sobre un tema, cada cifra con su código y periodo."""
     return (f"Escribe un informe de 5 viñetas sobre «{tema}» en el Perú con datos oficiales del BCRP.\n"
             "1. Busca las series pertinentes con buscar_series (2 o 3 como máximo).\n"
-            "2. Usa ultimo_dato para saber cuál es el dato más reciente y resumen para variaciones, promedios y "
+            "2. Usa valor_actual para saber cuál es el dato más reciente y resumen para variaciones, promedios y "
             "extremos del último año. No hagas cuentas a mano.\n"
             "3. Cada viñeta lleva una cifra, el código de la serie y el periodo, por ejemplo: "
             "«4.55 % (PN01273PM, 2026-09)».\n"

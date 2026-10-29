@@ -19,7 +19,7 @@ Repetí la corrida tres veces y el MCP acertó 30 de 30.
 | `buscar_series` | Encontrar el código de una serie por palabras (el catálogo tiene más de 17 mil) |
 | `serie` | Bajar los datos entre dos fechas, con el link a la fuente |
 | `resumen` | Primero, último, variación, promedio, máximo y mínimo, calculados en Python |
-| `ultimo_dato` | La que agregué yo: el dato más reciente publicado y su variación contra el año anterior |
+| `valor_actual` | La que agregué yo: el dato más reciente publicado y su variación contra el año anterior |
 
 Además tiene un recurso, `bcrp://serie/{codigo}`, con la ficha de cada serie, y un prompt, `informe(tema)`.
 
