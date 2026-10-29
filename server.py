@@ -1,4 +1,4 @@
-"""Servidor MCP del BCRP. Empiecen aquí: buscar_series ya funciona; completen los TODO hasta que pasen las pruebas.
+"""Servidor MCP con las series estadísticas del BCRP: buscar, descargar, resumir y consultar el último dato.
 
     uv run pytest                                           # el contrato: las 8 pruebas deben pasar
     uv run server.py                                        # el servidor, por stdio
@@ -192,8 +192,8 @@ def resumen(codigo: str, desde: str, hasta: str) -> dict:
 def ultimo_dato(codigo: str) -> dict:
     """El dato más reciente publicado de una serie del BCRP, con su periodo y el dato del año anterior.
 
-    Úsenla cuando pregunten por el valor «actual», «más reciente» o «último» de algo (la inflación de hoy, el tipo
-    de cambio de ayer, las reservas de este mes) y no sepan qué periodo ya está publicado. Ejemplo:
+    Úsala cuando pregunten por el valor «actual», «más reciente» o «último» de algo (la inflación de hoy, el tipo
+    de cambio de ayer, las reservas de este mes) y no se sepa qué periodo ya está publicado. Ejemplo:
     ultimo_dato("PD04638PD"). Devuelve ultimo {periodo, valor}, hace_un_anio {periodo, valor} cuando existe,
     la variación % entre ambos, los días desde la última actualización del catálogo y la URL de la fuente.
     """

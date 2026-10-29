@@ -1,8 +1,8 @@
-"""Ayuda para las 2 preguntas propias: busca la serie, baja el dato y da el link de la web del BCRP para revisarlo.
+"""Script que usé para armar mis 2 preguntas: busca la serie, baja el dato y da el link de la web del BCRP.
 
     uv run candidatos.py
 
-Abran cada link, comprueben el valor en la tabla de la web y recién entonces copien la fila a preguntas.csv.
+El valor final de cada pregunta lo revisé en la tabla de la web del BCRP antes de pasarlo a preguntas.csv.
 """
 from server import buscar_series, serie
 
