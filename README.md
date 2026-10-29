@@ -8,6 +8,7 @@ exportaciones de un mes reciente, ¿inventa un número? ¿Y qué cambia cuando t
 
 El análisis completo está en [informe.md](informe.md). En resumen: sin herramientas no acierta ninguna de las 10
 preguntas (aunque tampoco inventa, responde que no sabe), con búsqueda web acierta 8 y con el MCP acierta las 10.
+Repetí la corrida tres veces y el MCP acertó 30 de 30.
 
 ![Aciertos por modo](grafico.png)
 
@@ -30,6 +31,7 @@ Se necesita [uv](https://docs.astral.sh/uv/) y Claude Code con la sesión inicia
 uv run pytest -q          # 8 pruebas con datos reales del BCRP
 uv run evaluar.py         # le hace las preguntas a Claude sin herramientas y con el MCP
 uv run grafico.py         # genera grafico.png a partir de resultados.csv
+uv run evaluar.py --sin-salida --modos memoria --salida resultados_sin_salida.csv   # experimento extra
 ```
 
 Al abrir `claude` en esta carpeta se cargan los servidores `bcrp` y `fetch` desde `.mcp.json`. La primera vez se baja
@@ -42,5 +44,7 @@ el catálogo del BCRP a `datos/` (unos 7 MB), que no se sube al repositorio.
 - `preguntas.csv`: las 10 preguntas con su cifra oficial; las dos últimas (exportaciones y oro) son mías.
 - `evaluar.py`: la evaluación con `claude -p`.
 - `resultados_base.csv`: la corrida memoria contra MCP. `resultados.csv`: la corrida con memoria, web y MCP.
+- `resultados_sin_salida.csv`: memoria sin la opción de decir «no sé». `resultados_rep2.csv` y `resultados_rep3.csv`:
+  las repeticiones de la corrida base.
 - `candidatos.py`: el script que usé para buscar las series de mis dos preguntas.
 - `grafico.py` y `grafico.png`: la figura del informe.

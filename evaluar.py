@@ -2,6 +2,7 @@
 
     uv run evaluar.py                                   # memoria y mcp, con Haiku
     uv run evaluar.py --modos memoria mcp web --modelo sonnet
+    uv run evaluar.py --sin-salida --salida resultados_sin_salida.csv   # sin la opción de decir «no sé»
 
 Cada pregunta se le hace a Claude Code en modo no interactivo (claude -p) y debe responder un JSON con el valor.
 Escribe resultados.csv y cuenta cuántas acierta, cuántas se equivoca y en cuántas reconoce que no sabe.
@@ -19,8 +20,9 @@ AQUI = Path(__file__).parent
 ESQUEMA = {"type": "object", "required": ["valor", "fuente"],
            "properties": {"valor": {"type": ["number", "null"]}, "unidad": {"type": "string"},
                           "fuente": {"type": "string"}}}
-INSTRUCCION = ("Responde con un solo número en «valor», en la unidad que pide la pregunta. Si no puedes saberlo "
-               "con certeza, pon valor null: no estimes. En «fuente» di de dónde sale la cifra.\n\n")
+SIN_SALIDA = "Si no puedes saberlo con certeza, pon valor null: no estimes. "
+INSTRUCCION = ("Responde con un solo número en «valor», en la unidad que pide la pregunta. " + SIN_SALIDA +
+               "En «fuente» di de dónde sale la cifra.\n\n")
 MODOS = {   # todas sin las herramientas de archivos y terminal de Claude Code
     "memoria": ["--tools", "", "--strict-mcp-config"],
     "web": ["--tools", "WebSearch,WebFetch", "--allowedTools", "WebSearch,WebFetch", "--strict-mcp-config"],
@@ -54,7 +56,11 @@ if __name__ == "__main__":
     p.add_argument("--modelo", default="haiku")
     p.add_argument("--preguntas", default=str(AQUI / "preguntas.csv"))
     p.add_argument("--paralelo", type=int, default=4)
+    p.add_argument("--sin-salida", action="store_true", help="quita de la instrucción la opción de responder null")
+    p.add_argument("--salida", default=str(AQUI / "resultados.csv"))
     a = p.parse_args()
+    if a.sin_salida:
+        INSTRUCCION = INSTRUCCION.replace(SIN_SALIDA, "")
     if "mcp" in a.modos and not (AQUI / ".mcp.json").exists():
         raise SystemExit("Falta .mcp.json. Conecten su servidor: claude mcp add --scope project bcrp -- uv run server.py")
 
@@ -67,7 +73,7 @@ if __name__ == "__main__":
     filas = [{"id": q.id, "modo": m, "verdad": q.verdad, **r, "resultado": calificar(r["valor"], q.verdad, q.tolerancia)}
              for (q, m), r in zip(casos, respuestas)]
     res = pd.DataFrame(filas)
-    res.to_csv(AQUI / "resultados.csv", index=False)
+    res.to_csv(a.salida, index=False)
 
     print("\n" + res.pivot(index="id", columns="modo", values="valor").to_string())
     tabla = res.groupby("modo").resultado.value_counts().unstack(fill_value=0)
